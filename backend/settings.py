@@ -18,7 +18,7 @@ load_dotenv()  # Load environment variables from .env file
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-print("OPENAI_API_KEY:", OPENAI_API_KEY)  # Debugging line to check if the key is loaded
+# print("OPENAI_API_KEY:", OPENAI_API_KEY)  # Debugging line to check if the key is loaded
 
 
 
@@ -112,9 +112,13 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "bestfriend_db",
+        "USER": "postgres",
+        "PASSWORD": "yourpassword",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
