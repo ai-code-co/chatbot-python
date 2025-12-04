@@ -17,7 +17,7 @@
         :key="i" 
         :message="msg"
       />
-      <TypingIndicator v-if="isTyping" :active="isTyping" />
+      <TypingIndicator v-if="isTyping" :active="isTyping" :text="buffer" />
     </div>
 
     <div class="quick-actions">
@@ -67,6 +67,7 @@ export default {
       this.ws.onopen = () => console.log("WebSocket connected")
       this.ws.onmessage = (event) => {
         const data = JSON.parse(event.data)
+        
         if(data.type === 'stream') {
           this.buffer += data.delta
           this.isTyping = true
@@ -76,6 +77,7 @@ export default {
           this.isTyping = false
           this.scrollToBottom()
         } else if (data.type === 'message') {
+          this.isTyping = false
           this.messages.push({ role: 'assistant', text: data.message });
           this.scrollToBottom();
         } else if(data.type === 'system') {
@@ -87,6 +89,7 @@ export default {
       this.ws.onclose = () => console.log("WebSocket disconnected")
     },
     sendMessage() {
+      this.isTyping = true
       if(!this.inputText.trim()) return
       this.messages.push({role:'user', text:this.inputText})
       this.scrollToBottom()
@@ -264,142 +267,3 @@ button:hover {
 
 
 
-<!-- <template>
-  <div class="chat-container">
-    <div ref="chatContainer" class="messages">
-      <MessageBubble 
-        v-for="(msg, i) in messages" 
-        :key="i" 
-        :message="msg"
-      />
-      <TypingIndicator v-if="isTyping" :active="isTyping" />
-    </div>
-
-    <div class="input-area">
-      <input 
-        v-model="inputText" 
-        @keyup.enter="sendMessage" 
-        placeholder="Message Aira…" 
-      />
-      <button @click="sendMessage">Send</button>
-    </div>
-  </div>
-</template>
-
-<script>
-import MessageBubble from './MessageBubble.vue'
-import TypingIndicator from './TypingIndicator.vue'
-import { v4 as uuidv4 } from 'uuid'
-
-export default {
-  components: { MessageBubble, TypingIndicator },
-  data() {
-    return {
-      messages: [],
-      inputText: '',
-      ws: null,
-      userId: uuidv4(),
-      isTyping: false,
-      buffer: ''
-    }
-
-  },
-  mounted() {
-    this.connectWebSocket();
-  },
-  methods: {
-    connectWebSocket() {
-      // const wsUrl = `ws://127.0.0.1:8000/ws/chat/${this.userId}/`
-      const wsUrl = `ws://localhost:8000/ws/chat/123/
-`
-      this.ws = new WebSocket(wsUrl)
-
-      this.ws.onopen = () => console.log("WebSocket connected");
-
-      this.ws.onmessage = (event) => {
-        const data = JSON.parse(event.data)
-        if(data.type === 'stream') {
-          this.buffer += data.delta
-          this.isTyping = true
-        } else if(data.type === 'final') {
-          this.messages.push({role:'assistant', text:this.buffer + data.text})
-          this.buffer = ''
-          this.isTyping = false
-          this.scrollToBottom()
-        }
-   
-  else if (data.type === 'message') {
-    this.messages.push({ role: 'assistant', text: data.message });
-    this.scrollToBottom();
-  }
-        
-        else if(data.type === 'system') {
-          console.log("System message:", data.message)
-        } else if(data.type === 'error') {
-          console.error("Error:", data.message)
-        }
-      }
-
-      this.ws.onclose = () => console.log("WebSocket disconnected")
-    },
-    sendMessage() {
-      if(!this.inputText.trim()) return
-      // push user message locally
-      this.messages.push({role:'user', text:this.inputText})
-      this.scrollToBottom()
-      // send to backend
-      this.ws.send(JSON.stringify({type:'message', message:this.inputText}))
-      this.inputText = ''
-    },
-    scrollToBottom() {
-      this.$nextTick(() => {
-        const container = this.$refs.chatContainer
-        container.scrollTop = container.scrollHeight
-      })
-    }
-  }
-}
-</script>
-
-<style scoped>
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background: #ffffff;
-  padding: 16px;
-}
-
-.messages {
-  flex: 1;
-  overflow-y: auto;
-  padding-right: 6px;
-}
-
-.input-area {
-  display: flex;
-  padding-top: 10px;
-  border-top: 1px solid #ddd;
-  gap: 8px;
-}
-
-input {
-  flex: 1;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-size: 15px;
-}
-
-button {
-  padding: 12px 16px;
-  background: #0b93f6;
-  color: white;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-}
-button:hover {
-  background: #0a84e0;
-}
-</style> -->

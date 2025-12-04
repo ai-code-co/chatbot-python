@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div :class="['message-row', message.role]">
     <div :class="bubbleClass">
       <p>{{ message.text }}</p>
@@ -65,63 +65,3 @@ export default {
 </style>
 
 
-<!-- <template>
-  <div :class="wrapperClass">
-    <div :class="bubbleClass">
-      <p>{{ message.text }}</p>
-    </div>
-  </div>
-</template>
-
-<script>
-export default {
-  name: "MessageBubble",
-  props: {
-    message: { type: Object, required: true } // {role: 'user'|'assistant', text: '...'}
-  },
-  computed: {
-    bubbleClass() {
-      return this.message.role === 'user'
-        ? 'bg-blue-500 text-white rounded-lg p-2 self-end max-w-[70%] my-1'
-        : 'bg-gray-200 text-black rounded-lg p-2 self-start max-w-[70%] my-1';
-    }
-  }
-}
-</script>
-
-<style scoped>
-.message-row {
-  display: flex;
-  width: 100%;
-  margin: 6px 0;
-}
-
-.message-row.user {
-  justify-content: flex-end;
-}
-
-.message-row.assistant {
-  justify-content: flex-start;
-}
-
-/* ChatGPT style bubbles */
-.bubble {
-  max-width: 75%;
-  padding: 12px 14px;
-  border-radius: 12px;
-  font-size: 15px;
-  line-height: 1.45;
-  white-space: pre-wrap;
-}
-
-.bubble-user {
-  background-color: #0b93f6;
-  color: white;
-}
-
-.bubble-assistant {
-  background-color: #f2f2f2;
-  color: #111;
-  border: 1px solid #e6e6e6;
-}
-</style> -->
