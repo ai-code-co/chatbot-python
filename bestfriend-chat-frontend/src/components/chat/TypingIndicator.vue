@@ -1,8 +1,9 @@
 <template>
-  <div class="typing-indicator self-start text-gray-500 text-sm">
-    Aira is typing<span v-for="n in dots" :key="n">.</span>
+  <div class="typing-wrap">
+    <div class="dot" v-for="n in dots" :key="n"></div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -35,3 +36,33 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+.typing-wrap {
+  display: flex;
+  gap: 5px;
+  padding: 10px;
+  background: #f2f2f2;
+  width: fit-content;
+  border-radius: 12px;
+  border: 1px solid #e6e6e6;
+  margin: 6px 0;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #c7c7c7;
+  border-radius: 50%;
+  animation: blink 1.4s infinite ease-in-out both;
+}
+
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: .2; }
+  40% { opacity: 1; }
+}
+</style>
