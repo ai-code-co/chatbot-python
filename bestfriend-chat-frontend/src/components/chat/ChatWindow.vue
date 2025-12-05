@@ -67,7 +67,7 @@ export default {
 const wsBase = "wss://friendly-chat-bot.onrender.com"
 
   console.log("WebSocket base URL:", wsBase);
-const wsUrl = `${wsBase}/ws/chat/123/`;
+      const wsUrl = `${wsBase}/ws/chat/123/`;
       // const wsUrl = `ws://localhost:8000/ws/chat/123/`
       console.log("Connecting to WebSocket:", wsUrl)
       this.ws = new WebSocket(wsUrl)
