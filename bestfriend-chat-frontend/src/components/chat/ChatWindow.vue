@@ -63,6 +63,10 @@ export default {
   methods: {
     connectWebSocket() {
 
+const isProd = window.location.hostname !== "localhost" 
+            && window.location.hostname !== "127.0.0.1";
+
+console.log("Is production environment?", isProd);
 
 const wsBase = "wss://friendly-chat-bot.onrender.com"
 
