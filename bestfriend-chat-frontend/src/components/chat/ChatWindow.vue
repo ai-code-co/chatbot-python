@@ -68,13 +68,18 @@ const isProd = window.location.hostname !== "localhost"
 
 console.log("Is production environment?", isProd);
 
-const wsBase = "wss://friendly-chat-bot.onrender.com"
+const wsBase = isProd 
+  ? "wss://friendly-chat-bot.onrender.com"
+  : "ws://127.0.0.1:8000";
+
+// const wsBase = "wss://friendly-chat-bot.onrender.com"
 
   console.log("WebSocket base URL:", wsBase);
-      // const wsUrl = `${wsBase}/ws/chat/123/`;
+      const wsUrl = `${wsBase}/ws/chat/123/`;
     
       // const wsUrl = `ws://localhost:8000/ws/chat/123/`
-      const wsUrl = `ws://127.0.0.1:8000/ws/chat/123/`;
+      // const wsUrl = `ws://127.0.0.1:8000/ws/chat/123/`;
+
       console.log("Connecting to WebSocket:", wsUrl)
       this.ws = new WebSocket(wsUrl)
       this.ws.onopen = () => console.log("WebSocket connected")
