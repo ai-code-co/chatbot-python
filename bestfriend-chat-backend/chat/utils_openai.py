@@ -12,6 +12,7 @@ PERSONALITY_PROMPT = (
 )
 
 def get_openai_client():
+    
     return OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def extract_text_from_response(resp):
